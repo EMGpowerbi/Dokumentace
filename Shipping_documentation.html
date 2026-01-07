@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumentace Report Shipping - Přehled faktur dopravy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #c9b899 0%, #b5a285 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #c27a2c;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #c27a2c;
+        }
+
+        .section h3 {
+            color: #a86825;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .section h4 {
+            color: #555;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #c27a2c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .info-box strong {
+            color: #a86825;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .warning-box {
+            background: #fef5ed;
+            border-left: 4px solid #c27a2c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #f5f1eb;
+            border-left: 4px solid #b5a285;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        table th {
+            background: linear-gradient(135deg, #c27a2c 0%, #a86825 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        table tr:hover {
+            background: #e9ecef;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #c9b899 0%, #b5a285 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .metric-card h4 {
+            color: white;
+            margin: 0 0 10px 0;
+            font-size: 1.1em;
+        }
+
+        .metric-card .formula {
+            font-family: 'Courier New', monospace;
+            background: rgba(255,255,255,0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .flow-diagram {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .flow-step {
+            display: inline-block;
+            background: white;
+            border: 2px solid #c27a2c;
+            border-radius: 8px;
+            padding: 15px 25px;
+            margin: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .flow-arrow {
+            display: inline-block;
+            margin: 0 10px;
+            color: #a86825;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .toc {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .toc h3 {
+            color: #a86825;
+            margin-bottom: 15px;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            padding: 8px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .toc li:last-child {
+            border-bottom: none;
+        }
+
+        .toc a {
+            color: #a86825;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .toc a:hover {
+            color: #c27a2c;
+            text-decoration: underline;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background: #fef5ed;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            color: #a86825;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .flow-diagram, .info-box, .warning-box, .success-box {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Report Shipping</h1>
+            <p>Dokumentace reportu pro přehled faktur dopravy</p>
+        </div>
+
+        <div class="content">
+            <!-- Obsah dokumentace -->
+            <div class="toc">
+                <h3>📑 Obsah dokumentace</h3>
+                <ul>
+                    <li><a href="#zakladni-info">1. Základní informace</a></li>
+                    <li><a href="#cil">2. Cíl a účel reportu</a></li>
+                    <li><a href="#umisteni">3. Umístění reportu</a></li>
+                    <li><a href="#zdroje">4. Datové zdroje</a></li>
+                    <li><a href="#architektura">5. Architektura dat</a></li>
+                    <li><a href="#logika">6. Logika výpočtu a řezy</a></li>
+                    <li><a href="#metriky">7. Metriky a výpočty</a></li>
+                    <li><a href="#vystupy">8. Výstupní tabulky</a></li>
+                    <li><a href="#aktualizace">9. Aktualizace dat</a></li>
+                    <li><a href="#poznamky">10. Poznámky a omezení</a></li>
+                </ul>
+            </div>
+
+            <!-- 1. Základní informace -->
+            <div id="zakladni-info" class="section">
+                <h2>1. Základní informace</h2>
+                
+                <div class="info-box">
+                    <strong>Zadavatel reportu:</strong> Králová Klára (kralova.klara@euromedia.cz)
+                </div>
+
+                <div class="info-box">
+                    <strong>Autor reportu:</strong> Krčmárová Jaroslava (krcmarova.jaroslava@euromedia.cz)
+                </div>
+
+                <div class="info-box">
+                    <strong>Poslední úprava:</strong> 06.01.2026
+                </div>
+
+                <div class="info-box">
+                    <strong>Původní zadání:</strong> Controlling, ticket <a href="https://emgwiki.atlassian.net/issues?filter=12386&selectedIssue=PP-9081" target="_blank">PP-9081</a>
+                </div>
+
+                <div class="success-box">
+                    <strong>📂 Výchozí dokumenty:</strong>
+                    <ul>
+                        <li><strong>doprava_přehled.xlsx</strong> - Detailní specifikace řezů dopravy</li>
+                        <li><strong>Zápisů ze schůzek</strong> - Definice B2B/B2C segmentů, logiky kategorizace</li>
+                        <li>SharePoint: <a href="https://emgoffice365.sharepoint.com/sites/finance/Dokumenty/Forms/AllItems.aspx?id=%2Fsites%2Ffinance%2FDokumenty%2FControll%2FShipping" target="_blank">Shipping dokumenty</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 2. Cíl a účel -->
+            <div id="cil" class="section">
+                <h2>2. Cíl a účel reportu</h2>
+                
+                <p>Report Shipping slouží k <strong>detailnímu sledování nákladů na dopravu</strong> a poskytuje komplexní přehled o:</p>
+                
+                <ul>
+                    <li><strong>Fakturovaných objemech a počtech</strong> dopravců (PPL, DPD, Zásilkovna, Česká pošta)</li>
+                    <li><strong>Rozložení nákladů</strong> dle různých charakteristik dopravy (segment, typ expedice, kanál)</li>
+                    <li><strong>Detailním rozpadu položek faktur</strong> na úrovni jednotlivých balíků a zásilek</li>
+                    <li><strong>Shipping revenues</strong> - poplatcích za dopravu a úhradu účtovaných zákazníkům (pouze B2C segment)</li>
+                </ul>
+
+                <div class="warning-box">
+                    <strong>⚠️ Klíčové zadání:</strong><br>
+                    "Abychom dostali detailní přehled nákladů na dopravu, potřebujeme se podívat do morku faktur a správně rozsypat jednotlivé zásilky nebo celkové sumy dle charakteru dopravy do různých pohledů."
+                </div>
+
+                <h3>Hlavní pohled reportu zahrnuje:</h3>
+                <ul>
+                    <li><strong>DUZP (Datum uskutečnění zdanitelného plnění)</strong></li>
+                    <li><strong>Číslo faktury</strong></li>
+                    <li><strong>Typ expedice</strong> (B2B / B2C / prázdné)</li>
+                    <li><strong>Expedice</strong> (EMG sklad / PKL prodejny)</li>
+                    <li><strong>Kanál</strong> (LUXOR, BV, Ostatní atd.)</li>
+                    <li><strong>Dopravce</strong> (PPL, DPD, Zásilkovna, Česká pošta)</li>
+                    <li><strong>Typ služby</strong> (DPD CLASSIC, PPL Parcel Connect atd.)</li>
+                    <li><strong>Segment</strong> (B2B / B2C)</li>
+                </ul>
+            </div>
+
+            <!-- 3. Umístění -->
+            <div id="umisteni" class="section">
+                <h2>3. Umístění reportu</h2>
+                
+                <div class="success-box">
+                    <strong>🔗 Power BI Report:</strong><br>
+                    <a href="https://app.powerbi.com/groups/fafa18f9-fae5-4987-82ab-623a528c3411/reports/49792a4e-4c0c-40a4-b94a-87f142a5bf54/5f854b87abc504fe82a9?experience=power-bi" target="_blank">
+                        Otevřít report Shipping v Power BI
+                    </a>
+                </div>
+
+                <div class="info-box">
+                    <strong>📁 Umístění:</strong> Controlling workspace
+                </div>
+            </div>
+
+            <!-- 4. Datové zdroje -->
+            <div id="zdroje" class="section">
+                <h2>4. Datové zdroje</h2>
+                
+                <h3>Primární datové zdroje (HEG, Keboola)</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Zdroj</th>
+                            <th>Popis</th>
+                            <th>Účel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>faktura_dosla_polozky_dopravci</strong></td>
+                            <td>Položky došlých faktur od dopravců (PPL, DPD, ZA, CP)</td>
+                            <td>Primární zdroj nákladů na dopravu - jednotlivé položky faktur s čísly balíků</td>
+                        </tr>
+                        <tr>
+                            <td><strong>faktura_dosla_hlavicka</strong></td>
+                            <td>Hlavičky došlých faktur</td>
+                            <td>DUZP, datum splatnosti, celková částka faktury</td>
+                        </tr>
+                        <tr>
+                            <td><strong>expedovane_baliky</strong></td>
+                            <td>Informace o expedovaných balících z Helios</td>
+                            <td>Napárování fakturovaných balíků na zásilky, stavy doručení, typ expedice, kanál</td>
+                        </tr>
+                        <tr>
+                            <td><strong>zasilka_hlavicka</strong></td>
+                            <td>Hlavičky zásilek (EMG i NLX)</td>
+                            <td>Detaily o zásilkách, propojení na objednávky a výdejky</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EMG_cislo_baliku_hlavicka</strong></td>
+                            <td>Evidence všech balíků v EMG systému</td>
+                            <td>Identifikace balíků bez zásilek, vratek dodavatelům</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EMG_objednavka_svozu_*</strong></td>
+                            <td>Objednávky svozů (hlavička + položky)</td>
+                            <td>Identifikace B2B svozů, rozlišení odbyt/nákup, prázdné obaly vs zboží</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EMG_hromadna_zasilka_polozka</strong></td>
+                            <td>Položky hromadných zásilek</td>
+                            <td>Rozklíčování osobních odběrů v rámci B2B expedice</td>
+                        </tr>
+                        <tr>
+                            <td><strong>objednavky_hlavicka / objednavky_polozka</strong></td>
+                            <td>Zákaznické objednávky</td>
+                            <td>Shipping revenues - poplatky za dopravu/úhradu u B2C</td>
+                        </tr>
+                        <tr>
+                            <td><strong>vydejka_hlavicka / vydejka_polozka</strong></td>
+                            <td>Výdejky</td>
+                            <td>Shipping revenues, propojení B2C objednávek s expedicí</td>
+                        </tr>
+                        <tr>
+                            <td><strong>s20DimOrganizace</strong></td>
+                            <td>Číselník organizací</td>
+                            <td>Příznak "V péči" pro rozlišení nákupních svozů</td>
+                        </tr>
+                        <tr>
+                            <td><strong>s20DimTitul</strong></td>
+                            <td>Číselník titulů/produktů</td>
+                            <td>Identifikace poplatků za dopravu (BISegment = 'Doprava')</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Sekundární zdroje (transformované tabulky)</h3>
+                <ul>
+                    <li><strong>objednatel_svozu</strong> - Manuální číselník pro určení, zda jde o nákupní/odbytovou objednávku svozu (dočasné řešení)</li>
+                    <li><strong>NLX_poradace-tridy</strong> / <strong>EMG-poradace-tridy</strong> - Číselníky pořadačů pro kategorizaci dokladů</li>
+                </ul>
+            </div>
+
+            <!-- 5. Architektura dat -->
+            <div id="architektura" class="section">
+                <h2>5. Architektura dat v Keboola</h2>
+                
+                <p>Zpracování dat probíhá ve <strong>třech vrstvách transformací v Keboola</strong>:</p>
+
+                <div class="flow-diagram">
+                    <div class="flow-step">
+                        <strong>VRSTVA 10</strong><br>
+                        Ingestion jednotlivých dopravců<br>
+                        (PPL, DPD, ZA, CP)
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <strong>VRSTVA 20</strong><br>
+                        Sjednocení dat<br>
+                        (UNION všech dopravců)
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">
+                        <strong>VRSTVA 30</strong><br>
+                        Business logika<br>
+                        (finální transformace)
+                    </div>
+                </div>
+
+                <h3>Vrstva 10 - Ingestion jednotlivých dopravců</h3>
+                <p>Každý dopravce má samostatnou transformaci, která:</p>
+                <ul>
+                    <li>Čistí a standardizuje data z emailových příloh (faktury ve formátu Excel/CSV)</li>
+                    <li>Provádí datové konverze (TRY_TO_DECIMAL pro částky, TO_DATE pro datumy)</li>
+                    <li>Mapuje sloupce do jednotného formátu</li>
+                    <li>Filtruje platné záznamy (neprázdná čísla faktur, relevantní časové období)</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>Příklad - Česká pošta:</strong> Transformace zpracovává 52 sloupců. U sloupců, které Česká pošta neposkytuje (např. specifické příplatky jiných dopravců), jsou ve vrstvě 20 vyplněny NULL hodnoty.
+                </div>
+
+                <h3>Vrstva 20 - Sjednocení dat</h3>
+                <p>Spojuje data ze všech dopravců do jedné tabulky <span class="highlight">faktura_dosla_polozky_dopravci</span>. Každý dopravce dodává data v mírně odlišném formátu, ale po průchodu vrstvou 10 a 20 máme všechny řádky ve stejné struktuře.</p>
+
+                <div class="info-box">
+                    <strong>📌 Poznámka k DPH u České pošty:</strong><br>
+                    Česká pošta nám posílá k balíkům pouze cenu včetně DPH. Proto v této vrstvě přepočítáváme cenu pronásobením <code>*0,79</code>, tedy počítáme se standardní sazbou 21% DPH, abychom získali cenu bez DPH konzistentní s ostatními dopravci.
+                </div>
+
+                <h3>Vrstva 30 - Business logika</h3>
+                <p>Nejkomplexnější vrstva, která provádí:</p>
+                <ol>
+                    <li><strong>Napárování na ERP</strong> - propojení fakturovaných položek s daty z Helios (expedované balíky, zásilky, objednávky, výdejky)</li>
+                    <li><strong>Kategorizaci</strong> - určení segmentu (B2B/B2C), typu expedice, kanálu, typu objednávky</li>
+                    <li><strong>Identifikaci speciálních případů</strong> - hromadné zásilky, svozy, vratky, balíky bez zásilek</li>
+                    <li><strong>Výpočet shipping revenues</strong> - poplatky za dopravu a úhradu u B2C zásilek</li>
+                </ol>
+
+                <h4>Klíčové pomocné tabulky vytvářené ve vrstvě 30:</h4>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tabulka</th>
+                            <th>Účel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>expe_baliky</strong></td>
+                            <td>Základní tabulka expedovaných balíků s kategorizací B2B odbytu (prodej/zásobování/ostatní). Pro balíky se dvěma zásilkami bere nejstarší.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>baliky_vratek</strong></td>
+                            <td>Balíky vratek dodavatelům (pořadač "10 Vratky dodavatelům")</td>
+                        </tr>
+                        <tr>
+                            <td><strong>hromadne_zasilky</strong></td>
+                            <td>Hromadné zásilky (číslo začíná "HZ") s rozklíčováním dílčích zásilek pro určení kanálu a typu doručení</td>
+                        </tr>
+                        <tr>
+                            <td><strong>baliky_bez_zasilek</strong></td>
+                            <td>Balíky fakturované dopravci, které nemají záznam o zásilce v ERP (marketing, autorské výtisky, obalový materiál na prodejny)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>faktura_dosla_dopravci_shipping_revenues_temp</strong></td>
+                            <td>Propojení fakturovaných B2C balíků s poplatky za dopravu/úhradu z objednávek a výdejek</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 6. Logika výpočtu -->
+            <div id="logika" class="section">
+                <h2>6. Logika výpočtu a řezy</h2>
+                
+                <h3>6.1 Segment (B2B / B2C)</h3>
+                <p>Základní rozdělení expedic:</p>
+                
+                <div class="code-block">
+segment = CASE
+  -- Hromadné zásilky mohou obsahovat B2C položky i když expedice je B2B
+  WHEN LEFT(cislo_zasilky, 2) = 'HZ' AND hz.segment = 'B2B' THEN 'B2B'
+  WHEN LEFT(cislo_zasilky, 2) = 'HZ' AND hz.segment = 'B2C' THEN 'B2C'
+  
+  -- Standardní určení dle typu expedice
+  WHEN typ_expedice = 'B2B' THEN 'B2B'
+  WHEN typ_expedice = 'B2C' THEN 'B2C'
+  
+  -- B2B určeno dle kontextu (odbyt prodej/svoz/vratka, "v péči")
+  WHEN b2b_odbyt_prodej IS NOT NULL OR svoz_odesilatel_jevpeci IS NOT NULL 
+       OR cislo_baliku IN vratky THEN 'B2B'
+END
+                </div>
+
+                <h3>6.2 Typ expedice (B2B / B2C / prázdné)</h3>
+                <p>Určuje základní kategorii expedice:</p>
+                
+                <ul>
+                    <li><strong>B2B</strong> - expedice pro obchodní partnery, prodejny, svozy, vratky</li>
+                    <li><strong>B2C</strong> - expedice pro koncové zákazníky (LUXOR, BV)</li>
+                    <li><strong>Prázdné</strong> - nenalezené v ERP, nelze jednoznačně určit</li>
+                </ul>
+
+                <h3>6.3 Expedice (EMG sklad / PKL prodejny)</h3>
+                <p>Místo, odkud byla zásilka expedována:</p>
+                
+                <ul>
+                    <li><strong>EMG sklad</strong> - centrální sklad ve Stochově (většina expedic)</li>
+                    <li><strong>PKL prodejny</strong> - expedice z kamenných prodejen</li>
+                </ul>
+
+                <div class="warning-box">
+                    <strong>⚠️ Poznámka:</strong> Všechny balíky s B2B segmentem mají vždy expedici z EMG skladu. PKL expedice jsou pouze u B2C segmentu.
+                </div>
+
+                <h3>6.4 Kanál</h3>
+                <p>Kanál určuje, odkud zásilka pochází nebo jaký segment zákazníků obsluhuje:</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kanál</th>
+                            <th>Segment</th>
+                            <th>Popis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>B2B</strong></td>
+                            <td>B2B</td>
+                            <td>Všechny expedice segmentu B2B (obchodní partneři, prodejny, svozy, vratky)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>(Blank)</strong></td>
+                            <td>-</td>
+                            <td>Balíky, u kterých neumíme určit kanál</td>
+                        </tr>
+                        <tr>
+                            <td><strong>BT</strong></td>
+                            <td>B2C</td>
+                            <td>Zásilky z bývalé divize BookTook</td>
+                        </tr>
+                        <tr>
+                            <td><strong>BV</strong></td>
+                            <td>B2C</td>
+                            <td>Zásilky z divize Bohemia Ventures</td>
+                        </tr>
+                        <tr>
+                            <td><strong>KK</strong></td>
+                            <td>B2C</td>
+                            <td>Knižní klub</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NLX</strong></td>
+                            <td>B2C</td>
+                            <td>Expedice divize Luxor pro koncové zákazníky</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Detailní členění B2C kanálů:</h4>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kanál</th>
+                            <th>Podrozdělení</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>NLX (LUXOR)</strong></td>
+                            <td>
+                                • Úroveň členství: No club<br>
+                                • Země: CZ, SK<br>
+                                • Způsob doručení: Zásilka / Osobní odběr
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>KK (Knižní klub)</strong></td>
+                            <td>
+                                • Úroveň členství: KK Premium, KK Start<br>
+                                • Způsob doručení: Zásilka / Osobní odběr
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>BV / BT</strong></td>
+                            <td>
+                                • Země: CZ, SK<br>
+                                • SK: Buď zákazníkovi nebo na SK sklad<br>
+                                • Způsob doručení: Zásilka / Osobní odběr
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>6.5 B2B - Typ objednávky</h3>
+                <p>Rozlišení B2B expedic podle účelu:</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Typ objednávky</th>
+                            <th>Detail</th>
+                            <th>Popis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="3"><strong>Odbyt</strong></td>
+                            <td><strong>Prodej</strong></td>
+                            <td>Běžný prodej B2B zákazníkům, doručené zásilky</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Zásobování prodejen</strong></td>
+                            <td>Výdejky na LUXOR prodejny, objednávky z Hledače (NLX → Stochov)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ostatní</strong></td>
+                            <td>Propagace a dary, prodej autorům, povinné výtisky, výdejky zdarma</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2"><strong>Nákup</strong></td>
+                            <td><strong>Svoz</strong></td>
+                            <td>Vyzvednutí zboží u dodavatele, organizace "v péči"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vratka</strong></td>
+                            <td>Vratky dodavatelům (pořadač "10 Vratky dodavatelům")</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><strong>Obalový materiál na prodejny</strong></td>
+                            <td>Lepenky, prázdné obaly expedované na prodejny (balíky bez zásilek v B2B)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>6.6 Typ svozu</h3>
+                <p>Detailnější členění svozů:</p>
+                
+                <ul>
+                    <li><strong>Hledač</strong> - automatické objednávky svozu ze systému Hledač (komunikace prodejen se Stochovem)</li>
+                    <li><strong>Svoz prázdných obalů</strong> - dle atributu <code>pouze_obaly = 'A'</code> na položce objednávky svozu</li>
+                    <li><strong>Svoz zboží</strong> - standardní svoz zboží (knihy, pořadače atd.)</li>
+                </ul>
+
+                <h3>6.7 Způsob doručení</h3>
+                <p>Typ doručení zásilky:</p>
+                
+                <ul>
+                    <li><strong>Zásilka</strong> - standardní doručení dopravcem na adresu</li>
+                    <li><strong>Osobní odběr (OO)</strong> - vyzvednutí na prodejně nebo výdejním místě</li>
+                    <li><strong>Mkt/Aut.výtisky</strong> - speciální kategorie pro marketing a autorské výtisky (balíky bez zásilek z těchto výdejek)</li>
+                </ul>
+
+                <h3>6.8 Nenalezeno v ERP</h3>
+                <p>Balíky, které jsou fakturované dopravci, ale nenašly se odpovídající záznamy v Helios:</p>
+                
+                <div class="code-block">
+flag_nalezeno_erp = CASE
+  WHEN expedovany_balik IS NULL 
+   AND balik_bez_zasilky IS NULL
+   AND objednavka_svozu_polozka IS NULL
+   AND balik_vratky IS NULL
+  THEN 'Nenalezeno'
+  ELSE 'Nalezeno'
+END
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Možné důvody nenalezení:</strong>
+                    <ul>
+                        <li>Objednávky z prodejny na prodejnu (zadávané přes PPL portál mimo Helios)</li>
+                        <li>Dopravy z prodejny k dodavateli (také přes PPL portál)</li>
+                        <li>Balíky s chybným/neúplným číslem balíku</li>
+                        <li>Časový nesoulad (faktura přišla dříve než byl balík vyexpedován v systému)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 7. Metriky -->
+            <div id="metriky" class="section">
+                <h2>7. Metriky a výpočty</h2>
+                
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <h4>Fakturovaná částka</h4>
+                        <p>Celková fakturovaná částka za dopravu (bez DPH)</p>
+                        <div class="formula">SUM(cena_zaklad + priplatky)</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <h4>Fakturovaná částka (celá faktura)</h4>
+                        <p>Celková částka faktury včetně všech položek</p>
+                        <div class="formula">SUM(invoice_amount)</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <h4>Počet faktur</h4>
+                        <p>Počet unikátních faktur</p>
+                        <div class="formula">DISTINCTCOUNT(cislo_faktury)</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <h4>Počet fakturovaných balíků</h4>
+                        <p>Počet unikátních balíků na fakturách</p>
+                        <div class="formula">DISTINCTCOUNT(cislo_baliku_dopravce)</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <h4>Počet nenalezených balíků v ERP</h4>
+                        <p>Balíky bez záznamu v Helios</p>
+                        <div class="formula">COUNTROWS(flag_nalezeno_erp = 'Nenalezeno')</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <h4>Cena zásilek</h4>
+                        <p>Celková hodnota expedovaných zásilek (z ERP)</p>
+                        <div class="formula">SUM(cena_zasilky)</div>
+                    </div>
+                </div>
+
+                <h3>Shipping costs metriky</h3>
+                
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <h4>% Shipping costs</h4>
+                        <p>Podíl nákladů na dopravu k hodnotě zásilek</p>
+                        <div class="formula">Fakturovaná částka / Cena zásilek</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <h4>⌀ Shipping costs</h4>
+                        <p>Průměrné náklady na dopravu na balík</p>
+                        <div class="formula">Fakturovaná částka / Počet balíků</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <h4>⌀ Shipping costs whole invoice</h4>
+                        <p>Průměrné náklady celé faktury na balík</p>
+                        <div class="formula">Fakturovaná částka (celá faktura) / Počet balíků</div>
+                    </div>
+                </div>
+
+                <h3>Detailní rozpad nákladů (podle dopravce)</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metrika</th>
+                            <th>Formule</th>
+                            <th>Poznámka</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Dopravné</strong></td>
+                            <td>SUM(prepravne)</td>
+                            <td>Základní cena za přepravu</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Příplatek mýtné</strong></td>
+                            <td>SUM(priplatek_mytne)</td>
+                            <td>Náklady na mýtné</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Příplatek palivový</strong></td>
+                            <td>SUM(priplatek_palivovy)</td>
+                            <td>Palivový příplatek (variable)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Příplatek dobírka</strong></td>
+                            <td>SUM(priplatek_dobirka)</td>
+                            <td>Poplatek za COD službu</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ostatní příplatky</strong></td>
+                            <td>SUM(priplatek_ostatni)</td>
+                            <td>Atypický balík, GeoCheck, nadvaha atd.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sleva</strong></td>
+                            <td>SUM(sleva_celkem)</td>
+                            <td>Poskytnuté slevy</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Shipping revenues (B2C segment)</h3>
+                <p>Poplatky účtované zákazníkům:</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metrika</th>
+                            <th>Zdroj</th>
+                            <th>Poznámka</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Poplatek za dopravu (OBJ)</strong></td>
+                            <td>Objednávky - položky s BISegment = 'Doprava'</td>
+                            <td>Doprava, Expediční poplatek, Poplatek za dopravu</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Poplatek za úhradu (OBJ)</strong></td>
+                            <td>Objednávky - položky s názvem 'Poplatek za úhradu'</td>
+                            <td>Poplatek za dobírku</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Poplatek za dopravu (VYD)</strong></td>
+                            <td>Výdejky - položky s BISegment = 'Doprava'</td>
+                            <td>U BV je podkladem výdejka</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Poplatek za úhradu (VYD)</strong></td>
+                            <td>Výdejky - položky s názvem 'Poplatek za úhradu'</td>
+                            <td>U BV je podkladem výdejka</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box">
+                    <strong>📌 Poznámka k shipping revenues:</strong><br>
+                    Pro hromadné zásilky s osobními odběry (B2B expedice, segment B2C) se bere i expediční poplatek, i když je dnes osobní odběr zdarma - do budoucna nemusí být.
+                </div>
+            </div>
+
+            <!-- 8. Výstupní tabulky -->
+            <div id="vystupy" class="section">
+                <h2>8. Výstupní tabulky</h2>
+                
+                <h3>faktura_dosla_polozky_dopravci_emg</h3>
+                <p>Hlavní výstupní tabulka obsahující:</p>
+                
+                <ul>
+                    <li><strong>Údaje z faktury</strong>: číslo faktury, dopravce, DUZP, splatnost, účtovaná částka, příplatky</li>
+                    <li><strong>Údaje o balíku</strong>: číslo balíku dopravce, číslo zásilky, datum svozu, PSČ, hmotnost, produkt</li>
+                    <li><strong>Údaje z ERP</strong>: stav doručení, cena zásilky, datum vzniku, kanál, úroveň členství, expedice</li>
+                    <li><strong>Kategorizace</strong>: segment, typ expedice, způsob doručení, B2B typ objednávky/detail, typ svozu</li>
+                    <li><strong>Svoz metadata</strong>: číslo objednávky svozu, objednatel, fakturovat dopravu, odesilatel "v péči"</li>
+                    <li><strong>Flag</strong>: nalezeno/nenalezeno v ERP</li>
+                </ul>
+
+                <h3>faktura_dosla_dopravci_shipping_revenues</h3>
+                <p>Tabulka pro B2C segment obsahující shipping revenues:</p>
+                
+                <ul>
+                    <li><strong>Identifikátory</strong>: číslo balíku, číslo zásilky, číslo zásilky osobního odběru (v rámci HZ)</li>
+                    <li><strong>Objednávka</strong>: datum ceny, číslo objednávky, datový zdroj</li>
+                    <li><strong>Poplatky</strong>:
+                        <ul>
+                            <li>poplatek_za_dopravu_obj</li>
+                            <li>poplatek_za_uhradu_obj</li>
+                            <li>poplatek_za_dopravu_vyd</li>
+                            <li>poplatek_za_uhradu_vyd</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="warning-box">
+                    <strong>⚠️ Důležité:</strong><br>
+                    Shipping revenues jsou počítány <strong>pouze pro B2C segment</strong>. B2B expedice tyto poplatky neobsahují (případně se přefakturovávají při svozech s příznakem "fakturovat_dopravu").
+                </div>
+            </div>
+
+            <!-- 9. Aktualizace -->
+            <div id="aktualizace" class="section">
+                <h2>9. Aktualizace dat</h2>
+                
+                <div class="info-box">
+                    <strong>🕐 Frekvence aktualizace:</strong> Každý den po 9:00 hod
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Zpoždění dat:</strong><br>
+                    Aktualizace neobsahuje data ze dne aktualizace. Data jsou dostupná s one day lag.
+                </div>
+
+                <h3>Proces vytěžování faktur</h3>
+                <p>Faktury od dopravců jsou automaticky vytěžovány robotem:</p>
+                
+                <ol>
+                    <li><strong>Zdroj:</strong> Emailová schránka shipping@euromedia.cz</li>
+                    <li><strong>Časování:</strong> 
+                        <ul>
+                            <li>Pro všechny dopravce: Robot běží prvních 10 dní v měsíci</li>
+                            <li>Pro Českou poštu: Dodatečně 15. den v měsíci (kontrola, zda přišel detail faktury mailem)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Formát:</strong> Excel/CSV přílohy faktur</li>
+                    <li><strong>Zpracování:</strong> Parsování faktur na položky, nahrání do Snowflake</li>
+                    <li><strong>Transformace:</strong> Keboola vrstvy 10 → 20 → 30</li>
+                    <li><strong>Výstup:</strong> Power BI report</li>
+                </ol>
+
+                <h3>Pokrytí dopravců</h3>
+                <p>Aktuálně zpracováváme data od:</p>
+                
+                <ul>
+                    <li>✅ <strong>PPL</strong> - data od 7/2025 (červenec)</li>
+                    <li>✅ <strong>DPD</strong> - data od 9/2025 (září)</li>
+                    <li>✅ <strong>Zásilkovna</strong> - data od 10/2025 (říjen)</li>
+                    <li>✅ <strong>Česká pošta</strong> - data od 10/2025 (říjen)</li>
+                </ul>
+            </div>
+
+            <!-- 10. Poznámky -->
+            <div id="poznamky" class="section">
+                <h2>10. Poznámky a omezení</h2>
+                
+                <h3>Nenalezeno v ERP</h3>
+                <p>Množina fakturovaných balíků, o kterých nemáme žádná data v Helios:</p>
+                
+                <ul>
+                    <li>Neexistuje záznam o zásilce</li>
+                    <li>Neexistuje položka objednávky svozu s daným číslem balíku</li>
+                    <li>Nezobrazují se jako balíky vratek dodavatelům</li>
+                </ul>
+
+                <div class="warning-box">
+                    <strong>⚠️ Hlavní důvody:</strong>
+                    <ol>
+                        <li><strong>Objednávky mimo Helios:</strong> 
+                            <ul>
+                                <li>Objednávky z prodejny na prodejnu - zadávané přes PPL portál mimo Helios</li>
+                                <li>Dopravy z prodejny k dodavateli - ve zvláštních případech také přes PPL portál mimo Helios</li>
+                            </ul>
+                        </li>
+                        <li><strong>Časový nesoulad:</strong> Faktura přišla dříve než byl balík vyexpedován v systému</li>
+                        <li><strong>Chybné číslo balíku:</strong> Balíky s chybným nebo neúplným číslem balíku</li>
+                    </ol>
+                </div>
+
+                <h3>Balíky bez zásilek</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pořadač</th>
+                            <th>Segment</th>
+                            <th>Způsob doručení</th>
+                            <th>Poznámka</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>MAR Výdej marketing</td>
+                            <td>B2C</td>
+                            <td>Mkt/Aut.výtisky</td>
+                            <td>Marketing materiály</td>
+                        </tr>
+                        <tr>
+                            <td>Výdejky Autorské výtisky</td>
+                            <td>B2C</td>
+                            <td>Mkt/Aut.výtisky</td>
+                            <td>Výtisky pro autory</td>
+                        </tr>
+                        <tr>
+                            <td>Bez pořadače</td>
+                            <td>B2B</td>
+                            <td>Zásilka</td>
+                            <td>Obalový materiál na prodejny (lepenky)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Definice EMG sklad / PKL prodejny</h3>
+                <p>Rozlišení místa expedice:</p>
+                
+                <ul>
+                    <li><strong>EMG sklad:</strong> Všechny B2B expedice + B2C zásilky odeslané ze Stochova</li>
+                    <li><strong>PKL prodejny:</strong> Identifikujeme na základě <code>zpusob_expedice = 'Interní'</code> u NLX zásilek, které nejsou osobní odběr</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>📌 Poznámka:</strong> Původní definice od Petra Hejča nefungovala (nebyl osobní odběr a expedice je i interní). Aktuální logika vychází z kombinace způsobu expedice a typu doručení.
+                </div>
+
+                <h3>Hromadné zásilky (HZ)</h3>
+                <p>Speciální typ zásilek s vlastnostmi:</p>
+                
+                <ul>
+                    <li>Číslo zásilky začíná <code>HZ</code></li>
+                    <li>Jedna hromadná zásilka obsahuje více dílčích zásilek</li>
+                    <li>Pro každou dílčí zásilku určujeme kanál a způsob doručení</li>
+                    <li><strong>Segment:</strong> I když je typ expedice B2B, segment může být B2C (osobní odběry zákazníků na prodejnu)</li>
+                    <li>Bere se nejstarší zásilka v rámci hromadné zásilky</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>📌 Pravidlo:</strong><br>
+                    Pro HZ zásilky: <code>segment = hz.segment</code> (ne <code>typ_expedice</code>)
+                </div>
+
+                <h3>Objednávky svozu z Hledače</h3>
+                <ul>
+                    <li>Objednávky automaticky vytvořené systémem Hledač</li>
+                    <li>Identifikace: <code>externi_cislo LIKE 'HLEDAC%'</code></li>
+                    <li>Účel: Komunikace NLX prodejen se Stochovem (zásobování prodejen)</li>
+                    <li>Kategorizace: <strong>Odbyt → Svoz → Zásobování prodejen</strong></li>
+                </ul>
+
+                <h3>Duplicity a speciální případy</h3>
+                <p>Řešení duplicit ve vrstvě 30:</p>
+                
+                <div class="code-block">
+-- Odstranění duplicit: pokud přijdou dva stejné balíky
+-- v rámci dvou faktur, jednou jako nulová položka,
+-- odstraníme nulovou položku
+WHERE NOT (
+  cena_zaklad = 0 
+  AND EXISTS (
+    SELECT 1 FROM faktura_dosla_polozky_dopravci x
+    WHERE x.cislo_baliku_dopravce = fdp.cislo_baliku_dopravce
+    AND x.cena_zaklad <> 0
+  )
+)
+                </div>
+
+                <h3>Budoucí vylepšení</h3>
+                <p>Plánované změny a rozšíření:</p>
+                
+                <ul>
+                    <li>📋 <strong>Povinné pole na objednávce svozu:</strong> Rozlišení nákup/odbyt přímo v Helios (nahrazení manuálního číselníku objednatel_svozu)</li>
+                    <li>📋 <strong>Vlastní doprava:</strong> Doplnění dat o vlastní dopravě EMG (aktuálně neřešíme, jaké zásilky B2B/B2C a kam posíláme)</li>
+                    <li>📋 <strong>Rozšíření dopravců:</strong> Potenciálně další dopravci (Geis palety, vlastní doprava)</li>
+                    <li>📋 <strong>Fakturace vratek:</strong> Ověření, zda dopravci fakturují vrácené balíky pouze jednou</li>
+                    <li>📋 <strong>Zjednodušení výběru dat:</strong> Jednáme s Helpisem, aby pro všechny balíky, které mají podklad v ERP (Helios), vznikaly záznamy na třídě Cislo_baliku. Dnes tato třída nevzniká například pro objednávky svozu, což komplikuje napárování fakturovaných položek.</li>
+                </ul>
+
+                <h3>Známé limitace</h3>
+                <ul>
+                    <li>⚠️ Nemáme data před 7/2025 (červenec 2025)</li>
+                    <li>⚠️ Objednávky přes PPL portál (prodejna → prodejna, prodejna → dodavatel ve zvláštních případech) nejsou v ERP</li>
+                    <li>⚠️ Account number pro rozlišování prodejen: Kromě PPL zatím nedokážeme rozlišovat jednotlivé prodejny u ostatních dopravců</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2025 EUROMEDIA GROUP - Report Shipping Documentation</p>
+            <p>Poslední aktualizace: 06.01.2026 | Verze: 1.0</p>
+        </div>
+    </div>
+</body>
+</html>

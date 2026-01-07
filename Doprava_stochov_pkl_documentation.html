@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumentace Report Doprava Stochov & PKL</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #c9b899 0%, #b5a285 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #c27a2c;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #c27a2c;
+        }
+
+        .section h3 {
+            color: #a86825;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .section h4 {
+            color: #c27a2c;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #c27a2c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .info-box strong {
+            color: #a86825;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .warning-box {
+            background: #fef5ed;
+            border-left: 4px solid #c27a2c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #f5f1eb;
+            border-left: 4px solid #b5a285;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .flow-diagram {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .flow-box {
+            background: white;
+            border: 3px solid #c27a2c;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .flow-box h4 {
+            color: #c27a2c;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.3em;
+        }
+
+        .flow-arrow {
+            text-align: center;
+            margin: 20px 0;
+            color: #a86825;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .page-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .page-link {
+            background: #f5f1eb;
+            border: 2px solid #c27a2c;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: 500;
+            color: #a86825;
+        }
+
+        .toc {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .toc h3 {
+            color: #a86825;
+            margin-bottom: 15px;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            padding: 8px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .toc li:last-child {
+            border-bottom: none;
+        }
+
+        .toc a {
+            color: #a86825;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .toc a:hover {
+            color: #c27a2c;
+            text-decoration: underline;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .mapping-diagram {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .mapping-diagram img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .page-card {
+            background: #f8f9fa;
+            border-left: 4px solid #a86825;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .page-card h3 {
+            background: linear-gradient(135deg, #c9b899 0%, #b5a285 100%);
+            color: white;
+            padding: 12px 20px;
+            margin: -20px -20px 15px -20px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .flow-diagram, .info-box, .warning-box, .success-box {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Report Doprava Stochov & PKL</h1>
+            <p>Dokumentace reportu pro analýzu dopravních nákladů a výnosů z expedice balíků</p>
+        </div>
+
+        <div class="content">
+            <!-- Obsah dokumentace -->
+            <div class="toc">
+                <h3>📑 Obsah dokumentace</h3>
+                <ul>
+                    <li><a href="#zakladni-info">1. Základní informace</a></li>
+                    <li><a href="#cil">2. Cíl a účel reportu</a></li>
+                    <li><a href="#umisteni">3. Umístění reportu</a></li>
+                    <li><a href="#zdroje">4. Datové zdroje</a></li>
+                    <li><a href="#mapovani">5. Mapování kanálů mezi datasety</a></li>
+                    <li><a href="#stranky">6. Stránky reportu</a></li>
+                    <li><a href="#dataflow">7. Datové toky</a></li>
+                    <li><a href="#poznamky">8. Klíčová omezení a poznámky</a></li>
+                </ul>
+            </div>
+
+            <!-- 1. Základní informace -->
+            <div id="zakladni-info" class="section">
+                <h2>1. Základní informace</h2>
+                
+                <div class="info-box">
+                    <strong>Zadavatelé reportu:</strong> Klára Floriánová, Petr Hejč, František Mala
+                </div>
+
+                <div class="info-box">
+                    <strong>Autor reportu:</strong> Krčmárová Jaroslava
+                </div>
+
+                <div class="info-box">
+                    <strong>Poslední úprava:</strong> 31.12.2024
+                </div>
+
+                <div class="info-box">
+                    <strong>Původní zadání:</strong> Controlling, ticket <a href="https://emgwiki.atlassian.net/browse/PP-7431" target="_blank">PP-7431</a>
+                </div>
+
+
+            </div>
+
+            <!-- 2. Cíl a účel -->
+            <div id="cil" class="section">
+                <h2>2. Cíl a účel reportu</h2>
+                
+                <p>Report <strong>Doprava Stochov & PKL</strong> slouží k analýze dopravních nákladů a výnosů z expedice balíků ze skladu Stochov a prodejny PKL. Poskytuje komplexní pohled na:</p>
+                
+                <ul>
+                    <li><strong>Expedované balíky</strong> - vývoj expedice, úspěšnost doručení, využití dopravců</li>
+                    <li><strong>Shipping revenues</strong> - výnosy z poplatků za dopravu účtovaných zákazníkům</li>
+                    <li><strong>Účetní náklady a výnosy</strong> - finanční přehled z účetního deníku</li>
+                    <li><strong>Faktury došlé</strong> - skutečné náklady podle faktur od dopravních dodavatelů</li>
+                    <li><strong>Rozpad podle kanálů</strong> - alokace nákladů a výnosů do prodejních kanálů</li>
+                </ul>
+
+                <div class="warning-box">
+                    <strong>⚠️ Klíčové zadání:</strong><br>
+                    Report poskytuje detailní přehled dopravních nákladů a výnosů s možností analýzy podle různých dimenzí (dopravce, kanály, expedice, způsob doručení, hmotnost) a zahrnuje simulaci průměrné ceny za balík pro účely plánování fakturace.
+                </div>
+            </div>
+
+            <!-- 3. Umístění -->
+            <div id="umisteni" class="section">
+                <h2>3. Umístění reportu</h2>
+                
+                <div class="success-box">
+                    <strong>🔗 Power BI Report:</strong><br>
+                    <a href="https://app.powerbi.com/groups/fafa18f9-fae5-4987-82ab-623a528c3411/list?experience=power-bi" target="_blank">
+                        Otevřít report Doprava Stochov & PKL v Power BI
+                    </a>
+                </div>
+
+                <div class="info-box">
+                    <strong>📁 Umístění:</strong> Doprava workspace
+                </div>
+            </div>
+
+            <!-- 4. Datové zdroje -->
+            <div id="zdroje" class="section">
+                <h2>4. Datové zdroje</h2>
+                
+                <h3>4.1 Tabulka expedovane_baliky</h3>
+                
+                <div class="info-box">
+                    <strong>Vznik:</strong> Transformace v Keboola<br>
+                    <a href="https://connection.eu-central-1.keboola.com/admin/projects/390/transformations-v2/keboola.snowflake-transformation/812889613" target="_blank">
+                        Link na transformaci
+                    </a>
+                </div>
+
+                <p><strong>Struktura:</strong> Union 4 samostatných tabulek dle typu expedice</p>
+
+                <h4>A) Expedice PKL</h4>
+                <ul>
+                    <li><strong>Zdroj:</strong> HeN Luxor, pořadač Zásilky BO</li>
+                    <li><strong>Výběrová kritéria:</strong>
+                        <ul>
+                            <li>Způsob expedice = "Interní"</li>
+                            <li>Vyřazen osobní odběr (Způsob_doruceni &lt;&gt; "OO")</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>B) Expedice Stochov - NLX</h4>
+                <ul>
+                    <li><strong>Hlavní zdroj:</strong> HeN Luxor, pořadač Zásilky BO (Způsob expedice = "Externí")</li>
+                    <li><strong>Připojené tabulky:</strong>
+                        <ul>
+                            <li>HeN Luxor třída 1694 Čísla Balíků</li>
+                            <li>HeN Luxor třída 214 Zákaznická objednávka</li>
+                            <li>HeN EMG třída 2900152 Číslo balíku</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>C) Expedice Stochov - EMG</h4>
+                <ul>
+                    <li><strong>Hlavní zdroj:</strong> HeN EMG třída 20214 Zásilky</li>
+                    <li><strong>Doplňující data:</strong>
+                        <ul>
+                            <li>HeN EMG výdejky BookTook a Ventures Book</li>
+                            <li>Pořadače: '11810', '11812', '11665', '11668', '11677', '11854', '11939', '12422'</li>
+                            <li>HeN EMG třída 2900152 Číslo balíku</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>D) Expedice EMG - hromadné zásilky</h4>
+                <ul>
+                    <li><strong>Zdroj:</strong> HeN EMG třída 2900167 Hromadná zásilka</li>
+                    <li><strong>Připojeno:</strong> HeN EMG třída 2900152 Číslo balíku</li>
+                </ul>
+
+                <div class="warning-box">
+                    <strong>⚠️ Omezení datasetu expedovane_baliky:</strong>
+                    <ul>
+                        <li>Neobsahuje balíky z přepravy mezi prodejnami (chybí datový základ v ERP, objednávky přes PPL portál)</li>
+                        <li>Chybí objednávky z hledače - automatické položky na pořadači "objednavky svozu" (nemají podklad na třídě zásilky)</li>
+                        <li>Chybí balíky z marketingových objednávek a výdejek autorských výtisků (nemají podklad na třídě zásilky)</li>
+                    </ul>
+                </div>
+
+                <h3>4.2 Tabulka shipping_revenues</h3>
+                
+                <div class="info-box">
+                    <strong>Vznik:</strong> Stejná transformace v Keboole jako expedovane_baliky
+                </div>
+
+                <p><strong>Vytváří se ve čtyřech krocích:</strong></p>
+
+                <h4>Krok 1: shipping_revenues_temp1</h4>
+                <p>Vybírá faktury s položkami účtovanými jako "Shipping revenues":</p>
+                <ul>
+                    <li><strong>Účty:</strong> 602004 (NLX Poštovné), 60206 (Tržby z prodeje expediční popl.), 64800 (Příspěvek na expediční náklady - staré)</li>
+                    <li><strong>Období:</strong> Od roku 2023</li>
+                    <li><strong>Shipping revenue:</strong> Cena_zaklad z fakturovaných položek</li>
+                    <li><strong>Propojení:</strong> K fakturovaným položkám připisuje číslo subjektu z podkladové výdejky a objednávky</li>
+                </ul>
+
+                <div class="success-box">
+                    <strong>Logika kanálů v temp1:</strong>
+                    <ul>
+                        <li><strong>KK:</strong> klub = 'KK' nebo LEFT(Lvl3, 2) = 'KK'</li>
+                        <li><strong>eContent:</strong> NLX/Online + způsob_doruceni = 'DN' + není 'FV - zboží'</li>
+                        <li><strong>NLX Zásilka:</strong> NLX/Online + způsob_doruceni &lt;&gt; 'OO' + není 'FV - zboží'</li>
+                        <li><strong>NLX BOPS:</strong> NLX/Online + způsob_doruceni = 'OO' nebo útvar 3098</li>
+                        <li><strong>NLX Fakturace prodejny:</strong> NLX/Online + způsob_doruceni &lt;&gt; 'OO' + je 'FV - zboží'</li>
+                    </ul>
+                </div>
+
+                <h4>Krok 2: shipping_revenues_temp2</h4>
+                <p>Doplňuje faktury k zásilkám, které nebyly účtovány na výše uvedené účty:</p>
+                <ul>
+                    <li><strong>Kritéria:</strong> (klub = 'KK' AND vydejka má pohyb_zas) OR klub = 'Ventures Books'</li>
+                    <li><strong>Logika:</strong> Faktura k zásilce pro KK se pozná tak, že klub je KK a není vyplněné pole pohyb zásilky, nebo je klub Ventures Books</li>
+                    <li>Vyřazeny faktury již zahrnuté v temp1</li>
+                    <li><strong>Shipping revenue:</strong> Nastaveno na '0'</li>
+                </ul>
+
+                <h4>Krok 3: shipping_revenues_temp</h4>
+                <p>Union tabulek temp1 a temp2</p>
+
+                <h4>Krok 4: Finální shipping_revenues</h4>
+                <p>Připojuje k tabulce shipping_revenues_temp agregované údaje:</p>
+                <ul>
+                    <li><strong>shipping_revenues_faktura:</strong> Počet ks a tržba z faktur (vyřazeny položky kde BI segment = 'Doprava')</li>
+                    <li><strong>shipping_revenues_vydejka:</strong> Počet ks a tržba z výdejek (vyřazeny položky kde BI segment = 'Doprava'), obsahuje také datum_realizace_min</li>
+                    <li><strong>shipping_revenues_objednavka:</strong> Počet ks a tržba z objednávek (vyřazeny položky kde BI segment = 'Doprava')</li>
+                    <li>Seskupení na úroveň faktury - není potřeba detail na titul</li>
+                </ul>
+
+                <h3>4.3 Datová sada "Kostka deník"</h3>
+                
+                <div class="info-box">
+                    <strong>Zdroj:</strong> Snowflake warehouse READER_WH_84, databáze KEBOOLA, schéma WORKSPACE_391884240
+                </div>
+
+                <p><strong>Selekce účtů (s30DimUcet Ref):</strong><br>
+                50470, 51800, 518003, 518028, 51870, 51871, 602004, 60206, 64800</p>
+                
+                <p><strong>Odpovídá DimUcet ID:</strong><br>
+                10000065738, 20370743383, 20000006787, 20000022500, 20000006642, 10000065682, 20000006643, 20000000411, 20000006672</p>
+                
+                <div class="info-box">
+                    <strong>Speciální pravidlo pro účet 20000000403:</strong><br>
+                    Zahrnut pouze pokud DimOrganizace patří do seznamu:<br>
+                    20024106438, 20075132623, 20242509291, 20147874786, 20192458144, 20229925944, 20021286610, 20291033808
+                </div>
+                
+                <p><strong>Selekce dokladů (TridaCislo):</strong> 46, 33, 70, 653</p>
+                <p><strong>Období:</strong> Od 1.1.2024 (DimDatum &gt;= 20240101)</p>
+                <p><strong>Validace:</strong> Data jsou validována controllingem</p>
+
+                <h3>4.4 Tabulka faktura_dosla_hlavicka</h3>
+                
+                <div class="info-box">
+                    <strong>Období:</strong> Od 1.1.2024
+                </div>
+
+                <p><strong>Selektovaní dodavatelé:</strong></p>
+                <ul>
+                    <li>Zásilkovna s.r.o.</li>
+                    <li>Direct Parcel Distribution CZ s.r.o.</li>
+                    <li>PPL CZ s.r.o.</li>
+                    <li>Jindřích Novák</li>
+                    <li>Česká pošta,s.p.,</li>
+                    <li>GEIS CZ s.r.o.</li>
+                    <li>Malík Transport s.r.o.</li>
+                    <li>Vladimír Loskot</li>
+                    <li>Václav Rosenbaum</li>
+                    <li>Novák Jindřích - AUTODOPRAVA 3,5tuny</li>
+                    <li>Jiří Šmíd</li>
+                </ul>
+                
+                <div class="warning-box">
+                    <strong>Poznámka:</strong> U dodavatele "Jiří Šmíd" by bylo vhodné rozlišovat dopravní faktury od ostatních služeb (např. úklid)
+                </div>
+            </div>
+
+            <!-- 5. Mapování kanálů -->
+            <div id="mapovani" class="section">
+                <h2>5. Mapování kanálů mezi datasety</h2>
+                
+                <div class="mapping-diagram">
+                    <img src="data:image/png;base64,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" alt="Mapování kanálů mezi datasety">
+                </div>
+                
+                <div class="warning-box">
+                    <strong>Klíčové poznatky:</strong>
+                    <ul>
+                        <li>eContent má vždy shipping revenue = 0 (doporučeno vyřadit z ship.revenues)</li>
+                        <li>Některé mapování není 1:1, vyžaduje pokročilou logiku pro alokaci</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 6. Stránky reportu -->
+            <div id="stranky" class="section">
+                <h2>6. Stránky reportu</h2>
+
+                <div class="page-card">
+                    <h3>Přehled</h3>
+                    <p><strong>Datový zdroj:</strong> expedovane_baliky</p>
+                    <p><strong>Účel stránky:</strong> Poskytuje celkový přehled o počtech expedovaných balíků v čase s rozpadem podle různých dimenzí. Uživatel vidí vývoj expedice, úspěšnost doručení, využití jednotlivých dopravců, rozdělení podle prodejních kanálů a rozložení podle hmotnostních kategorií zásilek.</p>
+                    <p><strong>Zobrazované metriky:</strong></p>
+                    <ul>
+                        <li>Počet balíků doručených, vrácených, nepředaných dopravci, nedoručených, zrušených</li>
+                        <li>Časový vývoj expedice po měsících</li>
+                        <li>Poměr úspěšně doručených vs vrácených balíků (91,2% doručeno, 8,8% vráceno)</li>
+                        <li>Rozdělení expedice mezi sklady (EMG sklad vs PKL)</li>
+                        <li>Objem balíků podle dopravců</li>
+                        <li>Rozdělení podle kanálů (B2B, BT, BV, EMG-Ostatní, KK, NLX)</li>
+                        <li>Rozdělení podle hmotnosti (0-2 kg, 2-5 kg, 10-20 kg, 5-10 kg, 31.5 kg+)</li>
+                    </ul>
+                </div>
+
+                <div class="page-card">
+                    <h3>Přehled k fakturaci</h3>
+                    <p><strong>Datový zdroj:</strong> expedovane_baliky</p>
+                    <p><strong>Účel stránky:</strong> Umožňuje uživateli simulovat průměrnou cenu za balík a sledovat množství balíků určených k fakturaci. Stránka kombinuje informace o expedici s finančním pohledem na fakturaci dopravy.</p>
+                    <p><strong>Klíčové funkce:</strong></p>
+                    <ul>
+                        <li><strong>Simulace průměrné ceny:</strong> Uživatel může nastavit cílovou průměrnou cenu za balík pomocí posuvníku</li>
+                        <li>Sledování počtu balíků předaných dopravci a doručených</li>
+                        <li>Počet balíků k fakturaci</li>
+                        <li>Měsíční srovnání s předchozím měsícem</li>
+                        <li>Odhadovaná částka fakturace na základě simulované ceny</li>
+                    </ul>
+                </div>
+
+                <div class="page-card">
+                    <h3>Přehled s filtrací</h3>
+                    <p><strong>Datový zdroj:</strong> expedovane_baliky</p>
+                    <p><strong>Účel stránky:</strong> Poskytuje detailní filtrování expedovaných zásilek podle způsobu doručení a cílové země. Umožňuje analyzovat preference zákazníků a geografické rozložení expedice.</p>
+                </div>
+
+                <div class="page-card">
+                    <h3>Zásilky detail</h3>
+                    <p><strong>Datový zdroj:</strong> expedovane_baliky</p>
+                    <p><strong>Účel stránky:</strong> Umožňuje vyhledávání a detailní analýzu konkrétních zásilek. Uživatel může filtrovat zásilky podle různých kritérií a získat podrobné informace o jednotlivých zásilkách.</p>
+                </div>
+
+                <div class="page-card">
+                    <h3>Výnos vs náklad účetní</h3>
+                    <p><strong>Datový zdroj:</strong> Kostka deník</p>
+                    <p><strong>Účel stránky:</strong> Porovnává výnosy a náklady na dopravu z účetního pohledu. Poskytuje finanční přehled o ziskovosti dopravních služeb.</p>
+                    <p><strong>Zobrazované metriky:</strong></p>
+                    <ul>
+                        <li><strong>Shipping revenue Deník:</strong> Výnosy z dopravy evidované v účetním deníku</li>
+                        <li><strong>Shipping costs Deník:</strong> Náklady na dopravu evidované v účetním deníku</li>
+                        <li>Měsíční vývoj výnosů a nákladů</li>
+                        <li>Marže a ziskovost dopravních služeb</li>
+                    </ul>
+                    <div class="info-box">
+                        <strong>Výpočet nákladů:</strong> Vyřazeny účetní interní doklady (třída 33) - jde o dohadné položky, které by náklady duplikovaly (konzultováno s JD)
+                    </div>
+                </div>
+
+                <div class="page-card">
+                    <h3>Výnos</h3>
+                    <p><strong>Datový zdroj:</strong> shipping_revenues</p>
+                    <p><strong>Účel stránky:</strong> Analyzuje výnosy z dopravy na základě fakturovaných částek za dopravu. Umožňuje meziroční srovnání a identifikaci trendů ve výnosech.</p>
+                    <p><strong>Zobrazované metriky:</strong></p>
+                    <ul>
+                        <li>Výnos z dopravy (aktuální období)</li>
+                        <li>Výnos z dopravy za předchozí rok (LY)</li>
+                        <li>Meziroční změna v procentech</li>
+                        <li>Počet faktur, výdejek, objednávek</li>
+                        <li>Počet prodaných ks zboží z faktury</li>
+                        <li>Časový vývoj s porovnáním LY</li>
+                    </ul>
+                </div>
+
+                <div class="page-card">
+                    <h3>Výnos po kanálech</h3>
+                    <p><strong>Datový zdroj:</strong> shipping_revenues</p>
+                    <p><strong>Účel stránky:</strong> Poskytuje detailní rozpad výnosů z dopravy podle prodejních kanálů. Uživatel vidí, které kanály generují nejvyšší výnosy a jak se vyvíjejí v čase.</p>
+                    <p><strong>Zobrazované kanály:</strong> BT On-line, KK, NLX Zásilka, Other retail, Ventures Books</p>
+                    <p><strong>Dva pohledy:</strong></p>
+                    <ul>
+                        <li><strong>Za vybraný měsíc:</strong> Detailní pohled na konkrétní měsíc</li>
+                        <li><strong>YTD (Year-to-Date):</strong> Kumulativní pohled od začátku roku</li>
+                    </ul>
+                </div>
+
+                <div class="page-card">
+                    <h3>Výnos po kanálech - detail</h3>
+                    <p><strong>Datový zdroj:</strong> shipping_revenues</p>
+                    <p><strong>Účel stránky:</strong> Poskytuje nejdetailnější pohled na výnosy z dopravy s rozpadem až na jednotlivé faktury. Umožňuje identifikaci konkrétních faktur a jejich analýzu.</p>
+                </div>
+
+                <div class="page-card">
+                    <h3>Náklad účetní</h3>
+                    <p><strong>Datový zdroj:</strong> Kostka deník</p>
+                    <p><strong>Účel stránky:</strong> Sleduje vývoj nákladů na dopravu z účetního pohledu v čase. Umožňuje identifikaci trendů v nákladech a porovnání s výnosy.</p>
+                </div>
+
+                <div class="page-card">
+                    <h3>Náklad - faktury došlé</h3>
+                    <p><strong>Datový zdroj:</strong> faktura_dosla_hlavicka</p>
+                    <p><strong>Účel stránky:</strong> Analyzuje skutečné faktury došlé od dopravních dodavatelů. Poskytuje přehled o reálných nákladech za dopravní služby podle jednotlivých dodavatelů.</p>
+                    <p><strong>Sledovaní dodavatelé:</strong> Česká pošta, Direct Parcel Distribution, GEIS, Jiří Šmíd, Malík Transport, Novák Jindřích - AUTODOPRAVA, PPL, Václav Rosenbaum, Vladimír Loskot</p>
+                </div>
+
+                <div class="page-card">
+                    <h3>Výnos vs náklad po kanálech</h3>
+                    <p><strong>Datové zdroje:</strong> shipping_revenues + Kostka deník + mapování kanálů</p>
+                    <p><strong>Účel stránky:</strong> Kombinuje data o výnosech z faktur a nákladech z účetního deníku s alokací do jednotlivých prodejních kanálů. Poskytuje komplexní pohled na ziskovost dopravních služeb v jednotlivých kanálech.</p>
+                    <p><strong>Klíčová logika:</strong></p>
+                    <ul>
+                        <li><strong>Výnosy:</strong> Agregované na úrovni unikátních faktur ze shipping_revenues</li>
+                        <li><strong>Náklady:</strong> Alokovány z účetního deníku proporcionálně podle počtu balíků doručených k fakturaci</li>
+                        <li><strong>Alokační klíč:</strong> Poměr počtu balíků doručených k fakturaci × celkové náklady z deníku</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 7. Datové toky -->
+            <div id="dataflow" class="section">
+                <h2>7. Datové toky</h2>
+                
+                <div class="flow-diagram">
+                    <div class="flow-box">
+                        <h4>EXPEDOVANE_BALIKY</h4>
+                        <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">
+                            Union 4 tabulek: Expedice PKL, Expedice Stochov - NLX, Expedice Stochov - EMG, Expedice EMG - hromadné zásilky
+                        </p>
+                        <p style="color: #999; font-size: 0.85em; font-style: italic;">
+                            HeN Luxor/EMG (Třídy: 1694, 214, 20214, 2900152, 2900167)
+                        </p>
+                    </div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="page-links">
+                        <span class="page-link">Přehled</span>
+                        <span class="page-link">Přehled k fakturaci</span>
+                        <span class="page-link">Přehled s filtrací</span>
+                        <span class="page-link">Zásilky detail</span>
+                    </div>
+                </div>
+
+                <div class="flow-diagram">
+                    <div class="flow-box">
+                        <h4>SHIPPING_REVENUES</h4>
+                        <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">
+                            temp1 (účty 602004, 60206, 64800) + temp2 (KK/Ventures Books) + agregace z faktur, výdejek, objednávek
+                        </p>
+                        <p style="color: #999; font-size: 0.85em; font-style: italic;">
+                            Data od roku 2023, vyřazen BI segment = Doprava
+                        </p>
+                    </div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="page-links">
+                        <span class="page-link">Výnos</span>
+                        <span class="page-link">Výnos po kanálech</span>
+                        <span class="page-link">Výnos po kanálech - detail</span>
+                    </div>
+                </div>
+
+                <div class="flow-diagram">
+                    <div class="flow-box">
+                        <h4>KOSTKA DENÍK</h4>
+                        <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">
+                            s30DenikFactDenik - Účty: 50470, 51800, 518003, 518028, 51870, 51871, 602004, 60206, 64800
+                        </p>
+                        <p style="color: #999; font-size: 0.85em; font-style: italic;">
+                            Data od 1.1.2024, validováno controllingem, vyřazeny interní doklady (třída 33)
+                        </p>
+                    </div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="page-links">
+                        <span class="page-link">Výnos vs náklad účetní</span>
+                        <span class="page-link">Náklad účetní</span>
+                    </div>
+                </div>
+
+                <div class="flow-diagram">
+                    <div class="flow-box">
+                        <h4>FAKTURA_DOSLA_HLAVICKA</h4>
+                        <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">
+                            11 dopravních dodavatelů: Zásilkovna, PPL, Česká pošta, DPD, GEIS, Malík Transport, atd.
+                        </p>
+                        <p style="color: #999; font-size: 0.85em; font-style: italic;">
+                            Data od 1.1.2024
+                        </p>
+                    </div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="page-links">
+                        <span class="page-link">Náklad - faktury došlé</span>
+                    </div>
+                </div>
+
+                <div class="flow-diagram" style="background: #fef5ed;">
+                    <div class="flow-box" style="border-color: #FFA500;">
+                        <h4 style="color: #FFA500;">KOMBINACE ZDROJŮ</h4>
+                        <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">
+                            shipping_revenues + Kostka deník + mapování kanálů
+                        </p>
+                        <p style="color: #999; font-size: 0.85em; font-style: italic;">
+                            Alokace nákladů proporcionálně podle počtu balíků
+                        </p>
+                    </div>
+                    <div class="flow-arrow" style="color: #FFA500;">↓</div>
+                    <div class="page-links">
+                        <span class="page-link" style="border-color: #FFA500; background: #fef5ed; color: #FFA500;">Výnos vs náklad po kanálech</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. Klíčová omezení a poznámky -->
+            <div id="poznamky" class="section">
+                <h2>8. Klíčová omezení a poznámky</h2>
+
+                <div class="warning-box">
+                    <strong>1. Neúplnost dat expedovane_baliky</strong>
+                    <p>Dataset neobsahuje všechny typy zásilek:</p>
+                    <ul>
+                        <li>Chybí balíky z přepravy mezi prodejnami</li>
+                        <li>Nejsou zahrnuty objednávky z hledače</li>
+                        <li>Chybí balíky z marketingových výdejů a autorských výtisků</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <strong>2. eContent shipping revenue</strong>
+                    <p>Kanál eContent má vždy shipping revenue = 0, doporučeno vyřadit ze shipping_revenues</p>
+                </div>
+
+                <div class="info-box">
+                    <strong>3. Mapování kanálů</strong>
+                    <p>Mapování mezi expedovane_baliky a shipping_revenues není 1:1, vyžaduje pokročilou logiku pro správné propojení dat</p>
+                </div>
+
+                <div class="info-box">
+                    <strong>4. Alokace nákladů</strong>
+                    <p>Náklady z účetního deníku jsou alokovány do kanálů proporcionálně podle počtu balíků doručených k fakturaci. Tato metoda poskytuje odhad, nemusí ale přesně odpovídat skutečným nákladům v jednotlivých kanálech.</p>
+                </div>
+
+                <div class="info-box">
+                    <strong>5. Dohadné položky</strong>
+                    <p>Z výpočtu nákladů jsou vyřazeny doklady třídy 33 (dohadné položky) pro zabránění duplikace nákladů. Rozhodnutí konzultováno s JD.</p>
+                </div>
+
+                <div class="info-box">
+                    <strong>6. Dodavatel Jiří Šmíd</strong>
+                    <p>Doporučeno rozlišovat dopravní faktury od ostatních služeb (např. úklid), protože aktuálně jsou všechny faktury zahrnuty do dopravních nákladů.</p>
+                </div>
+
+                <div class="info-box">
+                    <strong>7. BI segment Doprava</strong>
+                    <p>Položky s BI segmentem = 'Doprava' jsou vyřazeny ze všech výpočtů v shipping_revenues (faktura, výdejka, objednávka), aby nedocházelo k započítání poplatků za dopravu do počtu prodaných kusů zboží.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Dokumentace vytvořena: 31.12.2024 | Controlling | EMG</p>
+        </div>
+    </div>
+</body>
+</html>
